@@ -1,0 +1,6 @@
+# C/C++ build outputs
+*.exe
+*.o
+*.obj
+*.out
+*.json
