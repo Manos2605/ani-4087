@@ -7,7 +7,7 @@ Donnez les dimensions en mètres, pas en unités arbitraires. Une porte fait deu
 
 Je construis un bureau avec un setup gaming dans une salle rectangulaire de **6,00 m de longueur**, **4,00 m de largeur** et **2,80 m de hauteur**. Elle sera assez grande pour se deplacer confortablement dans l'environnement virtuel.
 
-![Plan du bureau d'enfant avec une porte, une fenetre, un bureau et un ordinateur](plan-salle.jpeg)
+![bureau avec une porte, une fenetre, un bureau, une chaise](plan-salle.jpeg)
 
 *Figure 1 : plan de la salle vu du dessus, avec les dimensions en metres.*
 
