@@ -12,19 +12,26 @@ et la sortie obtenue est :
 ![Terminal](image.png)
 
 ## Conclusion et remarque
-La commande `jenga info` confirme que 
-* le workspace s'appelle `salle`
-* Jenga utilise bien le fichier `salle.jenga`. Elle * configurations disponibles, `Debug` et `Release`, 
-* la plateforme actuellement détectée : Windows en architecture `x86_64`.
 
-Le fichier de projet déclarait les configurations et le langage C++, mais la
-commande révèle d'autre informations comme :
-- les systèmes d'exploitation ciblé sont Windows, Linux et macOS ;
-- l'architecture cible est `x86_64` ;
-- trois toolchains sont disponibles : `host-gcc`, `msvc` et `mingw` ;
-- `MaSalle` n'est ni une suite de tests ni un projet externe ;
-- le daemon Jenga n'est pas lancé.
+La commande `jenga info` confirme que le workspace s'appelle `salle` et que Jenga utilise bien le fichier `salle.jenga`. Elle indique également que deux configurations sont disponibles : `Debug` et `Release`.
 
-donc `jenga info` permet notament de vérifier le workspace chargé, les cibles
-disponibles et les compilateurs utilisables
+La sortie apporte surtout des informations qui n'étaient pas écrites directement dans le fichier de projet :
+
+* trois toolchains sont disponibles : `host-gcc`, `msvc` et `mingw` ;
+* la cible `MaSalle` est de type `ConsoleApp` ;
+* `MaSalle` n'est pas une suite de tests ni un projet externe ;
+* le daemon Jenga n'est pas lancé.
+
+mais aussi les deux lignes :
+
+```text
+Platforms: Windows
+Target OSes: Windows, Linux, macOS
+```
+
+`Target OSes` vient du fichier `salle.jenga`, car les systèmes Windows, Linux et macOS y sont déclarés avec `targetoses([TargetOS.WINDOWS, TargetOS.LINUX, TargetOS.MACOS]])`.
+
+En revanche, `Platforms: Windows` correspond à la plateforme de la machine sur laquelle Jenga est actuellement exécuté. Elle indique donc que mon environnement actuel est Windows.
+
+Ainsi, `jenga info` ne fait pas seulement afficher le contenu du fichier de projet : il donne aussi des informations sur l'environnement détecté par Jenga, notamment les toolchains disponibles, la plateforme actuelle et l'état du daemon.
 
