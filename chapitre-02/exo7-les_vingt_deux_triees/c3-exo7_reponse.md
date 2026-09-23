@@ -1,67 +1,57 @@
-# Exercice 7 — Les vingt-deux triées
+# Exercice 7
 
-## Classement des projets
-
+## Énoncé
 Prenez la liste des vingt-trois dépendances de la démonstration du moteur et classez-la en trois groupes : celles dont le nom suffit à deviner le rôle, celles dont vous avez une idée sans certitude, celles dont vous ne savez rien.
 
 Pour ce troisième groupe, ouvrez l'en-tête principal de chaque module et rendez une phrase par module.
+
 ## Solution
-Pour afficher la liste des projets d'exemple disponibles dans Jenga, j'ai utilisé la commande :
+
+La liste des dépendances vient de la démonstration `NKXRDemo`, dans le fichier `Applications/NKXRDemo/NKXRDemo.jenga`.
+
+On peut retrouver cette liste avec :
+
+```bash
+nkentseudependson(
+    ["NKXR", "NKRenderer", "NKRHI", "NKSL", "NKGLSlang", "NKSPIRVCross",
+     "NKSerialization", "NKReflection", "NKFileSystem", "NKFont", "NKImage", "NKGlad",
+     "NKEvent", "NKWindow", "NKMath", "NKTime", "NKLogger", "NKStream",
+     "NKContainers", "NKMemory", "NKCore", "NKPlatform", "NKThreading"]
+)
 ```
-jenga examples list
-```
-Cette commande affiche la liste des projets d'exemple, leur nom, leur identifiant, leur description, les plateformes supportées et leur niveau de difficulté.
 
-J'ai ensuite classé les projets selon ce que leur nom permet de comprendre.
+### 1. Noms dont je peux facilement deviner le rôle
 
-### 1. Dépendances dont le nom suffit à comprendre le rôle
+* **NKXR** : réalité virtuelle / XR
+* **NKRenderer** : rendu graphique
+* **NKSerialization** : sérialisation des données
+* **NKReflection** : réflexion
+* **NKFileSystem** : système de fichiers
+* **NKFont** : gestion des polices
+* **NKImage** : gestion des images
+* **NKEvent** : gestion des événements
+* **NKWindow** : gestion des fenêtres
+* **NKMath** : mathématiques
+* **NKTime** : gestion du temps
+* **NKLogger** : gestion des logs
+* **NKStream** : gestion des flux
+* **NKContainers** : conteneurs de données
+* **NKMemory** : gestion de la mémoire
+* **NKCore** : fonctionnalités principales / de base
+* **NKPlatform** : gestion de la plateforme
+* **NKThreading** : gestion des threads
 
-Pour cette partie, le nom du projet me permet déjà de comprendre plus ou moins ce à quoi il sert.
+### 2. Noms dont j'ai une idée mais sans certitude
 
-* **Hello Console** : c'est simplement une application qui affiche des informations dans la console.
-* **Static Library** : permet de créer et d'utiliser une bibliothèque statique.
-* **Shared Library** : permet de créer et d'utiliser une bibliothèque partagée.
-* **Unit Tests** : sert à faire des tests unitaires sur le programme.
-* **Android NDK** : permet de développer une application Android avec du code natif.
-* **iOS Application** : permet de créer une application native pour iOS.
-* **WebAssembly** : sert à compiler du code pour l'exécuter avec WebAssembly.
-* **Custom Toolchain** : permet d'utiliser une toolchain personnalisée.
-* **Multi-Project Workspace** : permet de gérer plusieurs projets dans un même workspace.
-* **Benchmarking** : sert à mesurer les performances d'un programme.
-* **External Includes** : permet d'utiliser des bibliothèques ou des fichiers d'en-tête externes.
-* **Packaging** : sert à préparer un projet pour sa distribution.
-* **Cross Compilation** : permet de compiler un programme pour une autre plateforme.
-* **Win32 Window** : permet de créer une fenêtre Windows avec Win32.
-* **X11 Window (Linux)** : permet de créer une fenêtre sous Linux avec X11.
-* **Cocoa Window (macOS)** : permet de créer une fenêtre native sous macOS avec Cocoa.
-* **Android Native Window** : permet de créer une fenêtre native Android.
-* **Web Canvas** : permet d'utiliser un canvas sur le Web avec WebAssembly.
-* **iOS UIKit Window** : permet de créer une fenêtre iOS avec UIKit.
-* **Zig Cross Compilation** : permet de faire de la compilation croisée avec Zig.
-* **Android SDL3 (ndk-build)** : permet d'utiliser SDL3 pour Android avec `ndk-build`.
-* **All Platforms** : projet configuré pour fonctionner sur plusieurs plateformes.
-* **OpenGL Triangle** : montre un exemple simple d'utilisation d'OpenGL/GLES avec un triangle.
-* **Xbox Project Kinds** : présente différents types de projets pour Xbox.
-* **Xbox UWP Dev Mode** : montre un projet Xbox utilisant le mode développeur UWP.
+* **NKRHI** : probablement une interface avec le matériel ou le système de rendu graphique.
+* **NKSL** : probablement lié aux shaders ou à leur gestion.
+* **NKGlad** : probablement lié à OpenGL et au chargement de ses fonctions.
 
-### 2. Le nom donne une idée, mais je ne suis pas totalement sûr
+### 3. Noms dont je ne connaissais pas précisément le rôle
+Après avoir regardé les en-têtes principaux de ces modules :
+* **NKGLSlang** : ce module fournit les éléments nécessaires pour travailler avec le langage de shaders GLSL.
+* **NKSPIRVCross** : ce module permet de travailler avec SPIR-V et de faire des conversions entre différents formats ou langages de shaders.
 
-Pour certains projets, le nom me donne une idée de ce qu'ils font, mais je ne peux pas connaître exactement leur fonctionnement seulement avec le nom.
+## Conclusion
 
-* **C++20 Modules** : je comprends que ça concerne les modules introduits avec C++20, mais je ne connais pas encore exactement comment ils sont utilisés dans Jenga.
-* **Nuklear Multi-Platform Sandbox** : je comprends que c'est un projet graphique qui utilise Nuklear et qui fonctionne sur plusieurs plateformes. Par contre, le terme « Sandbox » ne me permet pas de savoir exactement ce que le projet fait.
-* **NK Window Framework** : le nom me fait penser à un framework pour gérer les fenêtres sur plusieurs plateformes, mais je ne connais pas exactement le rôle de `NK`.
-
-### 3. Ce que je ne connaissais pas
-
-Pour les projets où je n'étais pas sûr, il faudrait regarder les fichiers sources et surtout les fichiers d'en-tête principaux en profondeur pour mieux comprendre leur fonctionnement.
-
-* **Nuklear Multi-Platform Sandbox** : Nuklear est utilisé pour gérer l'interface graphique et le projet sert surtout à montrer son utilisation sur plusieurs plateformes.
-* **NK Window Framework** : c'est un framework qui permet de gérer les fenêtres sur différentes plateformes et qui est utilisé dans certaines démonstrations.
-* **C++20 Modules** : ce projet montre comment utiliser les modules de C++20 avec les compilateurs qui les supportent.
-
-## Remarque
-
-Avec la commande `jenga examples list`, j'obtiens **28 projets d'exemple**. Certains sont faciles à comprendre juste avec leur nom, tandis que pour d'autres il faut regarder un peu en profondeur le code pour savoir exactement à quoi ils servent.
-
-Dans mon cas, j'ai donc utilisé les noms et les descriptions affichés par Jenga pour faire le classement.
+En regardant uniquement les noms, une grande partie des modules est assez facile à comprendre, comme `NKWindow`, `NKImage`, `NKFont` ou `NKMemory`. Par contre, des noms comme `NKGLSlang` et `NKSPIRVCross` sont beaucoup moins intuitifs et nécessitent de regarder leur code pour comprendre leur rôle.

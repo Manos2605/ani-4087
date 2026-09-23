@@ -1,16 +1,38 @@
-# Exercice 8 
-## Enoncer
-Écrivez les filtres pour Windows et pour Linux dans votre projet, chacun avec ses bibliothèques. Faites vérifier par un camarade sur l'autre système que le projet se construit chez lui sans modification.
+# Exercice 8
 
-Si vous n'avez accès qu'à un système, écrivez quand même les deux et dites ce que vous n'avez pas pu vérifier.
+## Enoncé
+
+Écrivez les filtres pour Windows et pour Linux dans votre projet, chacun avec ses bibliothèques. Faites vérifier par un camarade sur l'autre système que le projet se construit chez lui sans modification. Si vous n'avez accès qu'à un système, écrivez quand même les deux et dites ce que vous n'avez pas pu vérifier.
 
 ## Solution
 
-Dans mon fichier [main.cpp](main.cpp), j'ai utilisé des filtres pour différencier Windows et Linux.
+Dans cet exercice, j'ai ajouté les filtres Windows et Linux directement dans mon fichier [salle.jenga](salle.jenga).
 
-J'ai utilisé les filtres dans le main() pour afficher le système sur lequel le programme est exécuté :
+### Fichier `salle.jenga`
+J'ai ajouté un filtre pour chaque système avec les bibliothèques correspondantes :
+```python
+with filter("system:Windows"):
+    links(["user32", "gdi32", "opengl32", "dinput8", "dxguid", "winmm"])
 
-```text
+with filter("system:Linux"):
+    links(["pthread", "X11", "Xext", "GL"])
+```
+
+Le filtre Windows ajoute les bibliothèques nécessaires pour Windows et le filtre Linux ajoute celles nécessaires pour Linux.
+
+### Fichier [main.cpp](main.cpp)
+Dans mon code C++, j'ai gardé les conditions de préprocesseur pour adapter le code au système utilisé :
+
+```cpp
+#ifdef _WIN32
+    #include <windows.h>
+#elif defined(__linux__)
+    #include <unistd.h>
+#endif
+```
+
+Et aussi j'affiche le système détecté :
+```cpp
 #ifdef _WIN32
     std::cout << "Système : Windows" << std::endl;
 #elif defined(__linux__)
@@ -20,40 +42,40 @@ J'ai utilisé les filtres dans le main() pour afficher le système sur lequel le
 #endif
 ```
 
-L'idée est que le compilateur prend automatiquement la partie correspondant au système utilisé. Ainsi, avec Windows, _WIN32 est défini, tandis que sous Linux, __linux__ est défini.
+Ici, `_WIN32` est utilisé pour Windows et `__linux__` pour Linux.
 
-Le fichier `salle.jenga` contient les cibles :
+### Vérification sous Linux
+Je n'ai pas pu fournir une sortie de construction Sous Linux pour cet exercice, car je n'ai pas pu avoir accès à un système Linux.
 
-* Windows
-* Linux
-* macOS
+Je ne considère donc pas la construction Windows comme vérifiée.
 
-Pour cet exercice, les filtres permettent de sélectionner les éléments nécessaires selon le système utilisé.
+### Vérification sous Windows
 
-## Vérification
-
-J'ai vérifié le projet sur les deux systèmes.
-
-- Sur **Windows**, le projet se construit correctement avec :
-
-```text
+J'ai construit le projet sous Windows avec :
+```
 jenga build
 ```
+Les informations importantes de la sortie sont :
+```
+Configuration: Debug
+Target:        Windows x86_64
+Toolchain:     mingw
 
-Sur **Ubuntu 24.04.3 LTS**, le même projet se construit également sans modification avec :
-
-```text
-jenga build
+✓   [1/1] Compiled: main.cpp
+✓ Built: Build\Bin\Debug-Windows\MaSalle\MaSalle.exe
 ```
 
-La compilation sous Ubuntu utilise la toolchain `host-gcc` pour la cible Linux x86_64.
-
-Le projet a donc été vérifié sur Windows et Linux avec les mêmes fichiers.
-
-## Remarque
-
-Le fait d'utiliser des filtres permet de conserver un seul projet tout en utilisant les bibliothèques adaptées au système d'exploitation sur lequel le projet est compilé.
-
+J'ai ensuite verifier en exécutant sous windows  :
+```
+jenga run
+```
+Le programme affiche :
+```
+Système : Windows
+```
 ## Conclusion
+Les **filtres du fichier `.jenga`** et les `#ifdef` du code C++ ne font pas la même chose.
 
-Le projet fonctionne sur Windows et Linux sans avoir besoin de modifier les fichiers entre les deux systèmes.
+Le `#ifdef` permet de choisir les parties du code C++ à compiler selon le système, tandis que le filtre `system:Windows` ou `system:Linux` permet de choisir les bibliothèques à donner à l'éditeur de liens.
+
+La construction Windows a été vérifiée, mais la construction Windows reste à vérifier.

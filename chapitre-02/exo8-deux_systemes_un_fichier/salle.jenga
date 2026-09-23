@@ -30,3 +30,9 @@ with workspace("salle"):
         language("C++")
         location("MaSalle")
         files(["src/**.cpp", "include/**.hpp"])
+
+        with filter("system:Windows"):
+                links(["user32", "gdi32", "opengl32", "dinput8", "dxguid", "winmm"])
+
+        with filter("system:Linux"):
+            links(["pthread", "X11", "Xext", "GL"])
