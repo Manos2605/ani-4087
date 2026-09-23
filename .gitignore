@@ -4,3 +4,4 @@
 *.obj
 *.out
 *.json
+*monapp.keystore
