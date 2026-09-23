@@ -1,16 +1,16 @@
 **# Exercice 10**
 
-**## Énoncé**
+## Énoncé**
 
 Écrivez une boucle qui fait un calcul lourd et le chronomètre. Construisez en Debug puis en Release et mesurez.
 
 Rendez le rapport. Puis dites, sachant qu'une image de casque dure onze millisecondes, laquelle des deux mesures vous aurait fait prendre une mauvaise décision.
 
-**## Le calcul mesuré**
+## Le calcul mesuré**
 
 Pour faire le test, j'ai écrit une boucle qui effectue plusieurs calculs avec `sin` et `cos`. Le calcul est répété sur plusieurs images et j'utilise `std::chrono` pour mesurer le temps nécessaire à chaque calcul.
 
-**### Fichier [main.cpp](main.cpp)**
+### Fichier [main.cpp](main.cpp)**
 
 Les parties importantes du code sont la boucle de calcul et la mesure du temps :
 
@@ -49,7 +49,7 @@ std::cout << "Temps moyen : " << moyenne << " ms" << std::endl;
 std::cout << "Resultat : " << resultat << std::endl;
 ```
 
-**## Conditions de mesure**
+## Conditions de mesure**
 
 J'ai effectué les mesures sous Windows en utilisant Jenga avec les deux configurations.
 
@@ -69,13 +69,36 @@ jenga run --config Release
 ```
 
 Cela permet de mesurer le programme avec les deux configurations.
+## Vérification des exécutables
 
-**## Résultats**
+Comme les premières mesures donnaient des temps très proches entre Debug et Release, j'ai vérifié les exécutables produits par les deux configurations.
+
+Avec PowerShell, j'ai utilisé :
+```
+Get-Item ".\Build\Bin\Debug-Windows\MaSalle\MaSalle.exe" |
+    Select-Object Length, LastWriteTime
+```
+et :
+```
+Get-Item ".\Build\Bin\Release-Windows\MaSalle\MaSalle.exe" |
+    Select-Object Length, LastWriteTime
+```
+Les résultats obtenus sont :
+```
+Configuration	Taille de l'exécutable	Dernière modification
+Debug	80 577 octets	23/09/2026 à 10:07:55
+Release	80 577 octets	23/09/2026 à 10:08:57
+```
+Les deux fichiers ont donc bien été reconstruits à des heures différentes. En revanche, ils ont exactement la même taille.
+
+Cette vérification est importante car une mesure de performance n'a de sens que si le programme exécuté correspond réellement à la configuration que l'on veut mesurer.
+
+## Résultats
 
 J'ai effectué trois mesures pour chaque configuration afin d'avoir une moyenne.
 
-| Configuration | Essai 1    | Essai 2    | Essai 3    | Moyenne |
-| - | - | - | - | - |
+| Configuration | Essai 1 | Essai 2 | Essai 3 | Moyenne |
+|-|-|-|-|-|
 | Debug | 11,5265 ms | 11,7278 ms | 11,5265 ms | **11,5936 ms** |
 | Release | 11,0831 ms | 10,8887 ms | 11,2260 ms | **11,0659 ms** |
 
@@ -87,7 +110,7 @@ Pour comparer les deux configurations, j'utilise le pourcentage d'écart :
 
 L'écart obtenu entre les deux moyennes est donc d'environ **4,55 %**.
 
-**## Comparaison avec les 11 ms**
+## Comparaison avec les 11 ms
 
 Une image de casque dure **11 ms**.
 
@@ -110,10 +133,20 @@ Je compare donc directement ces deux valeurs au budget de 11 ms :
 
 Les deux mesures sont donc légèrement au-dessus de 11 ms. Cependant, la mesure Release est beaucoup plus proche de la limite et l'écart entre les deux configurations est d'environ **4,55 %**.
 
-**## Quelle mesure m'aurait fait prendre une mauvaise décision ?**
+## Quelle mesure m'aurait fait prendre une mauvaise décision ?
 
-Le cours indique qu'il ne faut pas prendre de décision de performance à partir d'une mesure en Debug.
+Une image de casque dispose d'un budget de **11 ms**.
 
-Dans mes mesures, le Debug donne **11,5936 ms**, tandis que le Release donne **11,0659 ms**. La mesure Debug donne donc une vision plus défavorable du temps d'exécution.
+Avec mes mesures :
 
-Avec une limite de **11 ms**, quelques dixièmes de milliseconde peuvent être importants. Une décision prise uniquement à partir de la mesure Debug pourrait donc être différente de celle prise avec la mesure Release.
+```text
+Debug   : 11,5936 ms, soit environ 0,5936 ms au-dessus du budget.
+
+Release : 11,0659 ms, soit environ 0,0659 ms au-dessus du budget.
+```
+
+Les deux mesures indiquent donc que le calcul dépasse légèrement les **11 ms**. La mesure Debug donne toutefois un résultat plus défavorable que la mesure Release.
+
+Avec mes résultats, je ne peux pas dire que l'une des deux mesures aurait conduit à elle seule à une décision différente concernant le respect du budget, puisque les deux dépassent la limite de 11 ms. La différence est surtout que le dépassement mesuré en Debug est plus important.
+
+Enfin, j'ai vérifié les exécutables produits. Les fichiers `MaSalle.exe` de Debug et de Release ont été générés à des heures différentes, mais ils ont exactement la même taille : **80 577 octets**. Cette vérification montre qu'il est important de contrôler non seulement la configuration utilisée pour construire le programme, mais également celle utilisée pour lancer le programme, avant de tirer une conclusion définitive sur les performances.
