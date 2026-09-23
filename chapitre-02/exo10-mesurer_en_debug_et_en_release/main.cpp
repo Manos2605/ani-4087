@@ -1,23 +1,45 @@
-#include <iostream>
 #include <chrono>
+#include <cmath>
+#include <iostream>
 
 int main() {
-    const long long N = 1000000;
-    volatile double resultat = 0.0;
 
-    auto debut = std::chrono::high_resolution_clock::now();
+#ifdef NDEBUG
+    std::cout << "Configuration : Release" << std::endl;
+#else
+    std::cout << "Configuration : Debug" << std::endl;
+#endif
 
-    for (long long i = 0; i < N; i++) {
-        resultat += i * 0.000001;
+    const int nbImages = 20;
+    const int nbCalculs = 500000;
+
+    double total = 0.0;
+    double resultat = 0.0;
+
+    for (int image = 0; image < nbImages; image++) {
+
+        auto debut = std::chrono::steady_clock::now();
+
+        for (int i = 0; i < nbCalculs; i++) {
+            double x = i * 0.00001;
+            resultat += std::sin(x) * std::cos(x);
+        }
+
+        auto fin = std::chrono::steady_clock::now();
+
+        double temps = std::chrono::duration<double, std::milli>(
+            fin - debut
+        ).count();
+
+        total += temps;
     }
 
-    auto fin = std::chrono::high_resolution_clock::now();
+    double moyenne = total / nbImages;
 
-    std::chrono::duration<double, std::milli> duree = fin - debut;
-
-    std::cout << "Resultat : " << resultat << std::endl;
-    std::cout << "Temps d'excution : " << duree.count()
-              << " ms" << std::endl;
+    std::cout << "Calculs par image : " << nbCalculs << std::endl;
+    std::cout << "Nombre d'images   : " << nbImages << std::endl;
+    std::cout << "Temps moyen       : " << moyenne << " ms" << std::endl;
+    std::cout << "Resultat temoin   : " << resultat << std::endl;
 
     return 0;
 }

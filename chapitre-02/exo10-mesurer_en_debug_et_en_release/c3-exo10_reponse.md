@@ -1,55 +1,119 @@
-# Exercice 10
+**# Exercice 10**
 
-## Enoncer
+**## Énoncé**
 
 Écrivez une boucle qui fait un calcul lourd et le chronomètre. Construisez en Debug puis en Release et mesurez.
 
 Rendez le rapport. Puis dites, sachant qu'une image de casque dure onze millisecondes, laquelle des deux mesures vous aurait fait prendre une mauvaise décision.
 
-## Solution
+**## Le calcul mesuré**
 
-Pour faire le test, j'ai écrit une boucle dans le fichier `main.cpp` qui effectue beaucoup de calculs et j'ai utilisé `std::chrono` pour mesurer le temps d'exécution.
+Pour faire le test, j'ai écrit une boucle qui effectue plusieurs calculs avec `sin` et `cos`. Le calcul est répété sur plusieurs images et j'utilise `std::chrono` pour mesurer le temps nécessaire à chaque calcul.
 
-Mon [main.cpp](main.cpp)
+**### Fichier [main.cpp](main.cpp)**
 
-J'ai ensuite construit le projet une première fois en **Debug** :
+Les parties importantes du code sont la boucle de calcul et la mesure du temps :
 
-```bash
-jenga build --config Debug
+```cpp
+const int nbImages = 20;
+const int nbCalculs = 500000;
+
+double total = 0.0;
+double resultat = 0.0;
+
+for (int image = 0; image < nbImages; image++) {
+
+    auto debut = std::chrono::steady_clock::now();
+
+    for (int i = 0; i < nbCalculs; i++) {
+        double x = i * 0.00001;
+        resultat += std::sin(x) * std::cos(x);
+    }
+
+    auto fin = std::chrono::steady_clock::now();
+
+    double temps = std::chrono::duration<double, std::milli>(
+        fin - debut
+    ).count();
+
+    total += temps;
+}
+
+double moyenne = total / nbImages;
 ```
 
-Puis j'ai fait la même chose en **Release** :
+Le résultat du calcul est également affiché à la fin afin de conserver le calcul effectué :
+
+```cpp
+std::cout << "Temps moyen : " << moyenne << " ms" << std::endl;
+std::cout << "Resultat : " << resultat << std::endl;
+```
+
+**## Conditions de mesure**
+
+J'ai effectué les mesures sous Windows en utilisant Jenga avec les deux configurations.
+
+J'ai d'abord construit et exécuté le programme en Debug :
+
+```bash
+jenga clean
+jenga build --config Debug
+jenga run --config Debug
+```
+
+Puis j'ai fait la même chose en Release :
 
 ```bash
 jenga build --config Release
+jenga run --config Release
 ```
 
-J'ai exécuté le programme dans les deux configurations et j'ai relevé les temps d'exécution.
+Cela permet de mesurer le programme avec les deux configurations.
 
-### Résultats Temps d'exécution
+**## Résultats**
 
-| Configuration |    Essai 1 |    Essai 2 |    Essai 3 |        Moyenne |
-|-|-|-|-|-|
-| Debug         | 254.449 ms | 255.994 ms | 254.885 ms | **255.109 ms** |
-| Release       | 254.416 ms | 254.713 ms | 262.416 ms | **257.182 ms** |
+J'ai effectué trois mesures pour chaque configuration afin d'avoir une moyenne.
 
-Dans mes mesures, la version **Release n'est pas plus rapide que la version Debug**. Elle est même légèrement plus lente sur ces trois essais. La différence reste cependant assez faible, donc elle peut être liée aux variations du temps d'exécution lors des différents essais.
+| Configuration | Essai 1    | Essai 2    | Essai 3    | Moyenne |
+| - | - | - | - | - |
+| Debug | 11,5265 ms | 11,7278 ms | 11,5265 ms | **11,5936 ms** |
+| Release | 11,0831 ms | 10,8887 ms | 11,2260 ms | **11,0659 ms** |
 
-## Comparaison avec les 11 ms
+Pour comparer les deux configurations, j'utilise le pourcentage d'écart :
 
-Une image de casque dure **11 ms**. Le cours précise qu'il ne faut pas mesurer les performances en **Debug**, car cette configuration peut donner une mauvaise idée des performances réelles du programme. L'écart entre Debug et Release peut être très important pour un calcul lourd.
+```text
+Écart = |Debug - Release| / Debug × 100
+```
 
-Dans mes essais, j'obtiens :
+L'écart obtenu entre les deux moyennes est donc d'environ **4,55 %**.
 
-* **Debug : 255.109 ms en moyenne**
-* **Release : 257.182 ms en moyenne**
+**## Comparaison avec les 11 ms**
 
-Dans mon cas, les résultats sont très proches et la Release est même légèrement plus lente sur les trois essais. Cela peut venir des variations lors de l'exécution et ne représente pas forcément le comportement général des deux configurations.
+Une image de casque dure **11 ms**.
 
-Cependant, selon le cours, **la mesure Debug est celle qui pourrait me faire prendre une mauvaise décision**, car elle n'est pas représentative des performances finales du programme. Pour juger si un calcul peut tenir dans un budget de **11 ms**, il faut donc se baser sur la configuration **Release**.
+Ma mesure moyenne en Debug est de :
 
-## Conclusion
+```text
+11,5936 ms
+```
 
-Cela me montre qu'il ne faut pas utiliser le temps obtenu en **Debug** pour juger les performances d'un calcul lourd. Même si mes mesures sont ici très proches, le cours précise que l'écart entre Debug et Release peut être très important.
+Ma mesure moyenne en Release est de :
 
-Pour une application de casque où le budget est de **11 ms par image**, je dois donc mesurer et prendre mes décisions à partir de la **version Release**, et non de la version Debug.
+```text
+11,0659 ms
+```
+
+Je compare donc directement ces deux valeurs au budget de 11 ms :
+
+* Debug : **11,5936 ms** au-dessus de 11 ms.
+* Release : **11,0659 ms** légèrement au-dessus de 11 ms.
+
+Les deux mesures sont donc légèrement au-dessus de 11 ms. Cependant, la mesure Release est beaucoup plus proche de la limite et l'écart entre les deux configurations est d'environ **4,55 %**.
+
+**## Quelle mesure m'aurait fait prendre une mauvaise décision ?**
+
+Le cours indique qu'il ne faut pas prendre de décision de performance à partir d'une mesure en Debug.
+
+Dans mes mesures, le Debug donne **11,5936 ms**, tandis que le Release donne **11,0659 ms**. La mesure Debug donne donc une vision plus défavorable du temps d'exécution.
+
+Avec une limite de **11 ms**, quelques dixièmes de milliseconde peuvent être importants. Une décision prise uniquement à partir de la mesure Debug pourrait donc être différente de celle prise avec la mesure Release.
