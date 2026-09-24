@@ -1,191 +1,177 @@
-# Exercice 1
+# Exercice 11
 
-## Énoncé
-
+## Enoncer
 Ouvrez le fichier de projet de la démonstration XR du moteur et lisez-le en entier, y compris les commentaires.
 
 Rendez une page : ce qu'il construit, ce dont il dépend, ce qui change d'un système à l'autre, et les trois pièges qu'il documente. Pour chacun des trois, dites ce qui se passerait sans la ligne concernée.
 
 ## Solution
+## 1. Ce qu'il construit
 
-### 1. Recherche de l'exemple
+Le projet s'appelle **NKXRDemo** et il est déclaré avec `windowedapp()`, donc il construit une application graphique avec une fenêtre.
 
-Pour commencer, j'ai affiché la liste des exemples disponibles avec la commande :
+C'est une démonstration XR du moteur qui permet de simuler un rendu stéréo sur ordinateur, sans utiliser directement un casque XR. La scène est rendue pour les deux yeux avec deux renderers 3D offscreen, puis la frame finale est composée avec un renderer 2D.
 
-```powershell
-jenga examples list
-```
+Le projet permet donc de tester la partie XR sur un environnement desktop.
 
-Dans la liste, j'ai trouvé l'exemple :
+## 2. Ce dont il dépend
 
-```text
-27_nk_window
-```
+Le projet dépend de plusieurs modules du moteur **Nkentseu**.
 
-Cet exemple concerne le système de fenêtres multiplateforme `NKWindow`.
+On retrouve notamment :
 
-J'ai ensuite copié l'exemple dans mon dossier de travail avec :
+* `NKCore`
+* `NKMemory`
+* `NKPlatform`
+* `NKRenderer`
+* `NKRHI`
+* `NKSL`
+* `NKGLSlang`
+* `NKSPIRVCross`
+* `NKSerialization`
+* `NKReflection`
+* `NKFileSystem`
+* `NKFont`
+* `NKImage`
+* `NKGlad`
+* `NKEvent`
+* `NKWindow`
+* `NKMath`
+* `NKTime`
+* `NKLogger`
+* `NKStream`
+* `NKContainers`
+* `NKThreading`
 
-```powershell
-jenga examples copy 27_nk_window .
-```
+Le projet utilise aussi les headers de **Vulkan**, notamment pour la partie `NkVulkanDevice.h` utilisée avec OpenXR.
 
-Après cela, j'ai ouvert le dossier de l'exemple et j'ai recherché le fichier de projet Jenga. C'est ce fichier que j'ai lu en entier, en prenant aussi en compte les commentaires.
+Les dépendances vont donc des modules de base du moteur jusqu'aux modules de rendu, de shaders et de gestion des fenêtres.
 
-### 2. Ce que construit le projet
+## 3. Ce qui change selon le système
 
-Le projet construit principalement une bibliothèque statique appelée **NKWindow**.
+Le fichier possède des configurations différentes selon le système d'exploitation.
 
-Le fichier indique que :
+### Windows
 
-```text
-NKWindow: Static library with platform abstraction
-Sandbox: Demo application using NKWindow API
-```
+Sous Windows, le projet utilise `TC_WINDOWS`.
 
-Donc `NKWindow` est une bibliothèque C++ qui permet de gérer les fenêtres et les événements de manière multiplateforme.
-
-Le projet contient aussi trois applications de démonstration :
-
-* `Sandbox`
-* `SandboxCamera`
-* `SandboxCameraFull`
-
-Ces applications utilisent la bibliothèque `NKWindow`.
-
-Le projet peut être construit en **Debug** ou en **Release** et utilise le C++17.
-
-### 3. De quoi dépend le projet ?
-
-Le projet utilise notamment les répertoires :
-
-```text
-src
-../Externals
-```
-
-Les applications de démonstration utilisent également `NKWindow` comme dépendance :
+Il ajoute notamment les defines :
 
 ```text
-links(["NKWindow"])
-dependson(["NKWindow"])
+WIN32_LEAN_AND_MEAN
+_UNICODE
+UNICODE
 ```
 
-Il y a aussi des bibliothèques qui dépendent du système utilisé.
-
-Par exemple, sous Windows, on trouve :
+Et plusieurs bibliothèques Windows comme :
 
 ```text
 user32
 gdi32
 opengl32
-dwmapi
-shell32
-xinput
+d3d11
+d3d12
+dxgi
+advapi32
 ```
 
-Sous Linux :
+### Linux
+
+Sous Linux, le projet utilise `clang-native`.
+
+Il ajoute notamment :
+
+```text
+NKENTSEU_FORCE_WINDOWING_XLIB_ONLY
+```
+
+Et utilise :
 
 ```text
 pthread
 X11
+Xext
+GL
 ```
 
-Et sous Android :
+### macOS
+
+Sous macOS, le projet utilise également `clang-native`.
+
+Il utilise notamment les frameworks :
 
 ```text
-android
-log
-EGL
-GLESv3
-camera2ndk
-mediandk
+Cocoa
+QuartzCore
+OpenGL
 ```
 
-Donc les dépendances ne sont pas exactement les mêmes selon la plateforme.
+Il y a aussi les configurations `Debug` et `Release`, qui permettent de changer les paramètres de compilation et d'optimisation.
 
-### 4. Ce qui change d'un système à l'autre
+## 4. Les trois pièges documentés
 
-Le projet est prévu pour plusieurs plateformes :
+### Piège 1 : `NKGLSlang` et `NKSPIRVCross`
 
-* Windows
-* Linux
-* macOS
-* Android
-* iOS
-* Web
-* HarmonyOS
+Le fichier ajoute explicitement `NKGLSlang` et `NKSPIRVCross` dans `nkentseudependson`.
 
-Le fichier utilise des `filter("system:...")` pour appliquer une configuration différente selon le système.
+Ces deux modules sont nécessaires parce que les composants de rendu et de shaders les utilisent.
 
-**Windows :**
-Le projet utilise le backend **Win32**, avec le toolchain `clang-mingw` et les bibliothèques propres à Windows.
+Le problème est que ces dépendances ne sont pas récupérées automatiquement par transitivité jusqu'à l'exécutable final.
 
-**Linux :**
-Il existe deux configurations. Une configuration `headless` utilise le backend **NOOP**, notamment lorsqu'il n'y a pas d'affichage. La configuration normale utilise **XLib/X11**.
+**Si on enlève ces deux dépendances :**
 
-**macOS :**
-Le backend utilisé est **Cocoa**, avec des frameworks comme `Cocoa`, `QuartzCore`, `OpenGL` et `Metal`.
+* les sources peuvent quand même être compilées ;
+* mais au moment de l'édition de liens, certaines fonctions utilisées par `NKSL` ou `NKRHI` ne seront pas trouvées ;
+* on obtient donc des erreurs de symboles non définis.
 
-**Android :**
-Le projet utilise le **NDK**, `NativeActivity` et `EGL`. Il configure aussi les versions du SDK ainsi que plusieurs architectures Android.
+Le problème arrive donc à l'étape de **l'édition de liens**.
 
-**iOS :**
-Le projet utilise **UIKit**, `QuartzCore`, `OpenGLES` et `AVFoundation`.
+### Piège 2 : `NK_RHI_VK_ENABLED`
 
-**Web :**
-Le projet utilise **Emscripten** et **WebAssembly**, avec un canvas et une mémoire initiale de 32 MB.
-
-**HarmonyOS :**
-Pour le moment, le projet utilise un backend **Noop** comme solution de remplacement. Le commentaire indique qu'un vrai backend HarmonyOS devra être ajouté plus tard.
-
-### 5. Les trois pièges documentés
-
-### Piège 1 : le mode Linux `headless`
-
-Le fichier contient :
+Le projet contient :
 
 ```text
-with filter("system:Linux && options:headless"):
+defines(["NK_RHI_VK_ENABLED"])
 ```
 
-Cette configuration utilise le backend `NOOP`. Le commentaire précise que cela permet notamment de faire fonctionner le projet en CI ou avec WSL lorsqu'il n'y a pas d'affichage X11.
+Ce define permet d'activer la vraie implémentation Vulkan dans `NkVulkanDevice.h`.
 
-Les fichiers générés sont également placés dans des dossiers différents pour ne pas les mélanger avec les fichiers Linux normaux.
+Sans ce define, le header utilise une version **STUB** de la classe.
 
-**Sans cette configuration**, le projet pourrait essayer d'utiliser le backend graphique X11 alors qu'aucun affichage n'est disponible.
+**Si on enlève cette ligne :**
 
-### Piège 2 : `ASYNCIFY` pour le Web
+* le header peut toujours être inclus ;
+* mais la vraie classe Vulkan n'est plus disponible ;
+* le code OpenXR qui utilise les fonctionnalités Vulkan nécessaires ne peut alors plus compiler.
 
-Pour la plateforme Web, on trouve :
+Le problème apparaît donc lors de la **compilation**.
+
+### Piège 3 : `advapi32`
+
+Sous Windows, le projet ajoute :
 
 ```text
-emscriptenextraflags(["-s", "ASYNCIFY"])
+advapi32
 ```
 
-Le commentaire précise que cette option est nécessaire pour les boucles synchrones de type desktop sur le Web.
+Cette bibliothèque est utilisée pour accéder à certaines fonctions du registre Windows.
 
-**Sans cette ligne**, les boucles synchrones utilisées par l'application pourraient ne pas fonctionner correctement avec Emscripten.
+Dans le cas de la démo XR, elle permet notamment d'utiliser `RegGetValueA` pour rechercher le runtime OpenXR actif.
 
-#### Piège 3 : le fallback HarmonyOS
+**Si on enlève `advapi32` :**
 
-Pour HarmonyOS, le projet utilise :
+* le code source peut être compilé ;
+* mais lors de l'édition de liens, `RegGetValueA` n'est pas trouvé ;
+* le linker signale alors un symbole non défini.
 
-```text
-files([
-    "src/NKWindow/Platform/Noop/**.cpp",
-    "src/NKWindow/Platform/Noop/**.h",
-])
-```
+Ce problème apparaît donc à l'**édition de liens** et uniquement sous Windows.
 
-Le commentaire indique qu'il s'agit d'un **fallback si le backend n'est pas encore implémenté**.
+## 5. Résumé
 
-Le fichier indique également qu'un vrai backend HarmonyOS pourra être ajouté plus tard.
+| Piège | Ce qui manque | Conséquence | Étape |
+| - | - | - | - |
+| `NKGLSlang` / `NKSPIRVCross` | Dépendances explicites | Symboles non trouvés | Édition de liens |
+| `NK_RHI_VK_ENABLED` | Define Vulkan | Utilisation du STUB et erreur avec le code Vulkan | Compilation      |
+| `advapi32` | Bibliothèque Windows | `RegGetValueA` non trouvé | Édition de liens |
 
-**Sans ce fallback**, il n'y aurait pas les fichiers d'implémentation utilisés actuellement pour cette configuration HarmonyOS, ce qui pourrait empêcher la compilation de cette cible.
-
-## Conclusion
-
-Après avoir lu le fichier de projet, j'ai compris que `27_nk_window` est un exemple de **framework de fenêtrage multiplateforme** basé sur `NKWindow`.
-
-Le fichier Jenga permet de définir ce qui doit être construit, les dépendances, les plateformes supportées et les configurations particulières de chaque système.
+En résumé, le fichier `.jenga` ne sert pas seulement à compiler le projet. Il permet aussi de gérer ses dépendances et les différences entre Windows, Linux et macOS. Les trois pièges montrent surtout que certaines dépendances ou définitions doivent être ajoutées explicitement pour que le projet puisse aller jusqu'à l'édition de liens.
