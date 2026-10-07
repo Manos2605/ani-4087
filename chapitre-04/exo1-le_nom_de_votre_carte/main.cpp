@@ -8,6 +8,7 @@ int main() {
     int n;
     std::cin >> n;
 
+    // Nom technique -> nom affiché
     std::unordered_map<std::string, std::string> lisible = {
         {"VULKAN", "Vulkan"},
         {"DX12", "DirectX 12"},
@@ -21,21 +22,22 @@ int main() {
     int logiciel = 0;
     std::set<std::string> differentes;
 
-    for (int i = 0; i < n; ++i) {
+    for (int i = 0; i < n; i++) {
         std::string nom;
         std::string plateforme;
         int k;
 
         std::cin >> nom >> plateforme >> k;
 
-        std::set<std::string> apis;
+        std::vector<std::string> apis;
 
-        for (int j = 0; j < k; ++j) {
+        for (int j = 0; j < k; j++) {
             std::string api;
             std::cin >> api;
-            apis.insert(api);
+            apis.push_back(api);
         }
 
+        // Ordre de recherche selon la plateforme
         std::vector<std::string> ordre;
 
         if (plateforme == "WINDOWS") {
@@ -51,12 +53,12 @@ int main() {
             ordre = {"VULKAN", "OPENGL"};
         }
 
-        // Compter les interfaces présentes mais jamais essayées.
+        // Compter les interfaces qui ne seront pas testées
         for (const std::string& api : apis) {
             bool dansOrdre = false;
 
             for (const std::string& candidate : ordre) {
-                if (candidate == api) {
+                if (api == candidate) {
                     dansOrdre = true;
                     break;
                 }
@@ -67,12 +69,18 @@ int main() {
             }
         }
 
-        // Choisir la première interface disponible.
+        // Choisir la première interface disponible
         std::string choix = "SOFTWARE";
 
         for (const std::string& candidate : ordre) {
-            if (apis.count(candidate)) {
-                choix = candidate;
+            for (const std::string& api : apis) {
+                if (api == candidate) {
+                    choix = candidate;
+                    break;
+                }
+            }
+
+            if (choix != "SOFTWARE") {
                 break;
             }
         }
