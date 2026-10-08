@@ -1,0 +1,8 @@
+Mes deux medianes :
+La médiane de la configuration ALL est de 573 ms. La médiane de la configuration RENDER3D | SHADOW est de 475 ms. L'écart entre les deux médianes est donc de 98 ms.
+
+L'ecart est-il significatif :
+L'écart de 98 ms entre les médianes montre une différence entre les deux configurations, mais il faut aussi regarder la dispersion des mesures. La configuration ALL varie entre 417 et 602 ms, alors que RENDER3D | SHADOW varie entre 424 et 1446 ms. Le premier démarrage de RENDER3D | SHADOW, à 1446 ms, est particulièrement lent. Avec cette forte dispersion, il est difficile de considérer l'écart de 98 ms comme clairement significatif.
+
+Pourquoi la mediane et pas la moyenne :
+La médiane est préférable ici car le premier lancement peut être beaucoup plus lent à cause du chargement des ressources depuis le disque. Dans mes mesures, le premier démarrage de RENDER3D | SHADOW prend 1446 ms alors que les autres sont compris entre 424 et 534 ms. Cette valeur augmente fortement la moyenne à 573 ms. La médiane, qui est de 475 ms, représente mieux un démarrage habituel et est donc plus adaptée pour comparer les deux configurations.

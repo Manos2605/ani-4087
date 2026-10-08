@@ -1,0 +1,8 @@
+Lignes avant les fonctions:
+Mon ancienne salle utilisait plusieurs calculs directement dans le programme pour déterminer les positions des objets. Ces calculs devaient être répétés pour chaque objet à placer au sol ou sur une table.
+
+Lignes apres :
+Après avoir créé les fonctions PoserAuSol et PoserSurTable, les calculs de position sont regroupés dans ces deux fonctions. Le programme peut donc les réutiliser pour placer les différents objets.
+
+L'erreur que la fonction m'evite :
+La fonction m'évite de faire une erreur dans le calcul de la hauteur du centre de l'objet. Pour un objet posé au sol, le centre est à sy / 2 et, pour un objet posé sur une table, le centre est à H + sy / 2. Cela évite notamment de placer directement la base de l'objet au niveau du sol ou de la table.

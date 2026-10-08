@@ -1,0 +1,8 @@
+Ce que la direction change :
+La direction du soleil modifie les faces qui reçoivent directement la lumière. Lorsque la lumière arrive davantage sur le sol, celui-ci devient plus lumineux et la différence avec les autres faces permet de mieux lire la profondeur de la salle. Une direction plus oblique peut au contraire éclairer fortement un mur et laisser d'autres faces proches de l'ambiante. Le contraste entre les faces change donc la perception des distances et de la forme de la pièce.
+
+Ce que l'intensite change :
+L'intensité augmente ou diminue la quantité de lumière reçue par les faces orientées vers le soleil. Une intensité plus élevée accentue les différences entre les faces éclairées et les faces restant proches de la lumière ambiante. La forme et les distances de la salle deviennent alors plus faciles à distinguer, tandis qu'une intensité plus faible donne des différences moins marquées et une lecture plus plate des surfaces.
+
+Ce que l'ombre change :
+L'ombre empêche certaines surfaces de recevoir directement la lumière du soleil. Elle crée ainsi des zones plus sombres qui renforcent les différences entre les surfaces éclairées et les surfaces dans l'ombre. Dans la salle, cela permet de mieux distinguer certains volumes et les distances, mais une ombre trop importante peut aussi rendre certaines zones difficiles à lire.
