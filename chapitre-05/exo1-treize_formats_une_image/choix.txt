@@ -1,0 +1,8 @@
+Mon format pour un mur :
+Je choisirais le format JPEG pour la texture de mon mur, car il permet généralement d'obtenir un fichier de petite taille. Comme mon mur est complètement blanc, je n'ai pas besoin de conserver beaucoup de détails.
+
+Pourquoi :
+Pour une texture aussi simple, je privilégie un format qui occupe peu d'espace disque tout en conservant un rendu visuellement correct. Le JPEG peut être un bon choix si sa taille est nettement inférieure à celle des autres formats et si la compression ne crée pas de défauts visibles sur la surface blanche.
+
+Ce qui m'a surpris :
+J'ai été surpris de constater que la taille d'un fichier dépend aussi du format utilisé pour enregistrer l'image, même lorsque la photographie représente une surface presque uniforme. J'ai également compris que le JPEG utilise une compression avec perte, contrairement à des formats comme PNG, ce qui peut modifier légèrement l'image même si ces changements sont difficiles à remarquer sur un mur blanc.

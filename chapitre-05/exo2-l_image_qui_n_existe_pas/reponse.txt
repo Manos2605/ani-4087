@@ -1,0 +1,8 @@
+Ce que rend Load : 
+Load renvoie 0 (false), IsValid() renvoie 0 (false), et la largeur comme la hauteur valent 0 : aucun pixel n'a été chargé.
+
+Pourquoi rien ne plante : 
+l'échec est signalé par le booléen de retour et l'image reste invalide. Le programme ne lit pas ses pixels. Le moteur journalise aussi l'échec de chargement de la texture et poursuit le rendu avec sa texture de remplacement.
+
+Ce que montre le mur : 
+le mur du fond est toujours rendu, en magenta. La texture demandée n'existe pas ; le moteur affiche donc sa texture de remplacement pour le matériau, au lieu d'interrompre le rendu de la salle.

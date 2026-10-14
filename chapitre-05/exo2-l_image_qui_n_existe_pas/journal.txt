@@ -1,0 +1,2 @@
+charge : 0, valide : 0, largeur : 0, hauteur : 0
+[2026-10-14 23:42:55.382] [ERR] [default] [NkTextureLibrary.cpp:478 in Load] -> [NkTextureLibrary] Echec chargement texture : murs/nexistepas.png
