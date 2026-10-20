@@ -1,0 +1,14 @@
+Ma sensibilité : 
+0,002 radian par unité de déplacement brut, soit environ 0,115° par unité.
+
+Vitesse de dérive : 
+Environ −11,5°/s sur l'intervalle de 4 s à 8 s.
+
+D'où vient ce chiffre :
+Entre t = 4 s et t = 8 s, le lacet passe d'environ 40° à −6°. La variation est de −6 − 40 = −46°. La durée est de 8 − 4 = 4 s. La vitesse moyenne calculée est donc de −46 / 4 = −11,5°/s. C'est une estimation moyenne sur cet intervalle ; les valeurs intermédiaires montrent que le lacet varie fortement.
+
+Pourquoi elle ne s'arrête pas :
+Le programme ajoute le déplacement brut de la souris à chaque image. Même lorsque je ne bouge plus volontairement la souris, les valeurs brutes peuvent encore varier et faire changer le lacet. Le calcul du lacet et du tangage est donc sensible aux variations du périphérique. Cependant, les changements importants observés dans mes mesures nécessitent une vérification avant de conclure qu'il s'agit réellement d'une dérive.
+
+Sens du mouvement observé :
+Dans notre configuration, les commandes sont inversées : déplacer la souris vers la gauche fait tourner la vue vers la droite, et déplacer la souris vers le haut fait regarder vers le bas. Il faut inverser le signe des deltas X et Y si l'on veut corriger ce comportement.

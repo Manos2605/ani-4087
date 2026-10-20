@@ -1,0 +1,11 @@
+Avec CaptureMouse seul :
+Quand j'ai testé `CaptureMouse(true)`, le pointeur restait associé à la fenêtre, mais il pouvait toujours sortir de ses limites lorsque je le déplaçais vers les bords. Cela montre que la capture seule ne suffit pas pour empêcher le pointeur de sortir de la fenêtre.
+
+Ce qui le retient :
+Après avoir ajouté `ClipMouseToClient(true)`, le pointeur ne pouvait plus sortir de la zone de la fenêtre. Cet appel demande au système de limiter le déplacement du pointeur au rectangle client de la fenêtre.
+
+Deux appuis de suite :
+Quand j'ai appuyé deux fois sur la touche Entrée, le pointeur est resté caché. En effet, `ShowMouse(false)` peut modifier un compteur de visibilité sous Windows. Si on appelle cette fonction plusieurs fois, il faut effectuer suffisamment d'appels à `ShowMouse(true)` pour rétablir la visibilité. Le programme doit donc éviter de cacher plusieurs fois le pointeur inutilement.
+
+Fermeture sans relâcher :
+Quand la fenêtre est fermée sans avoir appuyé sur Échap, le pointeur risque de rester confiné à la zone de l'ancienne fenêtre. Il faut donc appeler `PointeurRendre` avant la fermeture pour rendre le pointeur visible, désactiver la capture et retirer le confinement.

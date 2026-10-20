@@ -1,0 +1,5 @@
+t = 4 s, images = 241, brut = -6, lacet = 4e+01 deg
+t = 5 s, images = 301, brut = -3, lacet = 7e+01 deg
+t = 6 s, images = 361, brut = 4, lacet = 3 deg
+t = 7 s, images = 421, brut = 0, lacet = -6 deg
+t = 8 s, images = 481, brut = 0, lacet = -6 deg
