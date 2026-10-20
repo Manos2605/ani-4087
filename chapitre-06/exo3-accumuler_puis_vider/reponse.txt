@@ -1,0 +1,7 @@
+Lecture du module : le lacet évolue au fil des images, car cette version lit directement le delta du module d'entrée. Dans les relevés, il passe notamment de 30° à -100°. Cette évolution montre que la valeur lue ne reste pas nulle pendant toute la période observée.
+
+Accumulé et vidé : le lacet se stabilise autour de -100° dans les derniers relevés. Le déplacement est accumulé, appliqué une fois par image, puis l'accumulateur est remis à zéro. Les anciens déplacements ne sont donc pas réappliqués à chaque image.
+
+Accumulé sans vidage : le lacet continue de dériver, atteignant environ -70 000° dans les relevés. L'accumulateur conserve les déplacements précédents et le programme ajoute de nouveau ce total à chaque image.
+
+Ce que fait le vidage : le vidage remet à zéro le déplacement déjà traité. Sans cette opération, l'accumulateur conserve son ancien total et le réapplique à chaque image, ce qui explique la dérive observée dans la troisième version.

@@ -1,0 +1,5 @@
+t = 10 s : lu = 30°, vide = -90°, sans vidage = -6 000°.
+t = 10 s : lu = 2°, vide = -100°, sans vidage = -10 000°.
+t = 10 s : lu = -10°, vide = -100°, sans vidage = -20 000°.
+t = 20 s : lu = -50°, vide = -100°, sans vidage = -50 000°.
+t = 20 s : lu = -100°, vide = -100°, sans vidage = -70 000°.
