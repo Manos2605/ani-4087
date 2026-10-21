@@ -1,0 +1,11 @@
+Pourquoi cette direction :
+
+La direction du regard dépend du lacet et du tangage de la tête. Lorsque les deux angles sont nuls, le regard est dirigé vers l'axe -Z, soit (0, 0, -1). Avec un lacet de 90° et un tangage nul, le regard est dirigé vers l'axe -X, soit (-1, 0, 0). Le tangage permet d'orienter le regard vers le haut ou vers le bas.
+
+L'épreuve qui sait dire non :
+
+Les tests automatiques comparent les directions obtenues aux valeurs attendues, avec une tolérance de 0,001 pour tenir compte des imprécisions des nombres flottants. Si une valeur dépasse cette tolérance, le test affiche ECHEC et le programme renvoie le code de retour 1. Lors de l'inversion du signe du lacet, les tests à 90° et à 45° ont échoué, tandis que le test du tangage seul a réussi. Cela prouve que les tests détectent bien cette erreur.
+
+Ce que la souris ne permettait pas :
+
+Les tests automatiques permettent de vérifier des orientations précises et reproductibles sans ouvrir la fenêtre 3D ni déplacer manuellement la souris. Ils permettent de détecter rapidement une erreur dans le calcul de la direction du regard et de vérifier que le programme fonctionne correctement après une modification.
