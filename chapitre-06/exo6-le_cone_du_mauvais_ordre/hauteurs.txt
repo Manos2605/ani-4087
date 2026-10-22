@@ -1,0 +1,10 @@
+lacet*tangage, lacet 0 : hauteur 30.0000 deg
+lacet*tangage, lacet 45 : hauteur 30.0000 deg
+lacet*tangage, lacet 90 : hauteur 30.0000 deg
+lacet*tangage, lacet 135 : hauteur 30.0000 deg
+lacet*tangage, lacet 180 : hauteur 30.0000 deg
+tangage*lacet, lacet 0 : hauteur 30.0000 deg
+tangage*lacet, lacet 45 : hauteur 20.7048 deg
+tangage*lacet, lacet 90 : hauteur 0.0000 deg
+tangage*lacet, lacet 135 : hauteur -20.7048 deg
+tangage*lacet, lacet 180 : hauteur -30.0000 deg
