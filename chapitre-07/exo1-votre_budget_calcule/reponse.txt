@@ -1,0 +1,5 @@
+La fréquence de mon écran : Les temps mesurés, autour de 16,2 à 16,7 ms par image, correspondent à une cadence d'environ 60 images par seconde (1000 / 16,216 ≈ 61,7 et 1000 / 16,653 ≈ 60,1). Cela suggère un écran ou un rythme de présentation proche de 60 Hz ; la fréquence exacte de l'écran doit être confirmée dans les paramètres d'affichage de Windows.
+
+La cadence que je tiens : Avec la synchronisation habituelle, la moyenne est de 16,216 ms par image, soit environ 61,7 images/s. Sans attente, la moyenne est de 16,653 ms, soit environ 60,1 images/s. Dans les deux cas, le temps moyen dépasse les budgets de 13,889 ms à 72 Hz, de 11,111 ms à 90 Hz et de 8,333 ms à 120 Hz. La cadence mesurée ne permet donc pas de tenir durablement ces trois objectifs.
+
+Ce que dit le maximum : Le maximum atteint 29,613 ms avec la synchronisation habituelle et 31,680 ms sans attente. Ces pointes sont nettement supérieures aux moyennes et correspondent à des images qui prennent presque deux fois plus de temps à être produites. Elles indiquent des ralentissements ponctuels et une régularité imparfaite, même si la moyenne reste proche de 60 images/s.

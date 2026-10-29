@@ -1,0 +1,4 @@
+hz = 72, periode = 13.889 ms, reel - predit = [REMPLACER PAR LA MESURE REELLE A 72 Hz]
+hz = 60, periode = 16.667 ms, reel - predit = -0.128 ms
+hz = 90, periode = 11.111 ms, reel - predit = 5.540 ms
+hz = 120, periode = 8.333 ms, reel - predit = 9.123 ms

@@ -1,0 +1,7 @@
+72 Hz : 13.889 ms par image
+90 Hz : 11.111 ms par image
+120 Hz : 8.333 ms par image
+
+ecran : moyenne 16.216 ms, mediane 16.470 ms, max 29.613 ms
+
+sans attente : moyenne 16.653 ms, mediane 16.635 ms, max 31.680 ms

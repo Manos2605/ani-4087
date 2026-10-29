@@ -1,0 +1,5 @@
+Ce qui est stable : La période théorique calculée à partir de la cadence demandée reste stable : elle vaut 1000 / hz en millisecondes. Les instants prédits sont calculés en ajoutant cette période à l'instant courant. En revanche, l'écart entre l'instant réel et l'instant prédit dépend de la cadence demandée et du rythme réel auquel les images sont présentées.
+
+Un divisé par la cadence : La période théorique est l'inverse de la cadence, exprimée en secondes : période = 1 / hz. En millisecondes, cela donne période = 1000 / hz. On obtient environ 16,667 ms à 60 Hz, 13,889 ms à 72 Hz, 11,111 ms à 90 Hz et 8,333 ms à 120 Hz.
+
+La période de mon écran : Les mesures à 60, 90 et 120 Hz suggèrent une période réelle proche de 16,7 ms, soit environ 60 images par seconde : à 60 Hz, l'écart moyen est de -0,128 ms ; à 90 Hz, il est de +5,540 ms ; et à 120 Hz, il est de +9,123 ms. Les écarts positifs aux cadences de 90 et 120 Hz sont proches de la différence entre la période réelle d'environ 16,7 ms et les périodes théoriques demandées. Cette estimation reste à confirmer avec la mesure obtenue à 72 Hz.
