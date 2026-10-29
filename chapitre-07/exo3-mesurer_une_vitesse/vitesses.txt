@@ -1,0 +1,45 @@
+Série programmée (MASALLE_TOUR=30)
+
+image 31 : dt = 15.367 ms, vitesse = (0.000, 30.000, 0.000) deg/s
+image 32 : dt = 16.856 ms, vitesse = (0.000, 30.000, 0.000) deg/s
+image 33 : dt = 17.164 ms, vitesse = (0.000, 30.000, 0.000) deg/s
+image 34 : dt = 16.598 ms, vitesse = (0.000, 30.000, 0.000) deg/s
+image 35 : dt = 15.986 ms, vitesse = (0.000, 30.000, 0.000) deg/s
+image 36 : dt = 17.585 ms, vitesse = (0.000, 30.000, 0.000) deg/s
+image 37 : dt = 16.776 ms, vitesse = (0.000, 30.000, 0.000) deg/s
+image 38 : dt = 16.225 ms, vitesse = (0.000, 30.000, 0.000) deg/s
+image 39 : dt = 16.418 ms, vitesse = (0.000, 30.000, 0.000) deg/s
+image 40 : dt = 16.479 ms, vitesse = (0.000, 30.000, 0.000) deg/s
+image 41 : dt = 16.938 ms, vitesse = (0.000, 30.000, 0.000) deg/s
+image 42 : dt = 16.788 ms, vitesse = (0.000, 30.000, 0.000) deg/s
+image 43 : dt = 16.937 ms, vitesse = (0.000, 30.000, 0.000) deg/s
+image 44 : dt = 16.794 ms, vitesse = (0.000, 30.000, 0.000) deg/s
+image 45 : dt = 16.353 ms, vitesse = (0.000, 30.000, 0.000) deg/s
+image 46 : dt = 16.498 ms, vitesse = (0.000, 30.000, 0.000) deg/s
+image 47 : dt = 16.391 ms, vitesse = (0.000, 30.000, 0.000) deg/s
+image 48 : dt = 16.660 ms, vitesse = (0.000, 30.000, 0.000) deg/s
+image 49 : dt = 16.401 ms, vitesse = (0.000, 30.000, 0.000) deg/s
+image 50 : dt = 17.244 ms, vitesse = (0.000, 30.000, 0.000) deg/s
+
+Série à la souris (MASALLE_TOUR=0)
+
+image 31 : dt = 16.127 ms, vitesse = (0.000, 0.000, 0.000) deg/s
+image 32 : dt = 14.931 ms, vitesse = (0.000, 0.000, 0.000) deg/s
+image 33 : dt = 16.284 ms, vitesse = (0.000, 0.000, 0.000) deg/s
+image 34 : dt = 17.141 ms, vitesse = (0.000, 0.000, 0.000) deg/s
+image 35 : dt = 16.104 ms, vitesse = (0.000, 0.000, 0.000) deg/s
+image 36 : dt = 17.041 ms, vitesse = (0.000, 0.000, 0.000) deg/s
+image 37 : dt = 17.076 ms, vitesse = (0.000, 0.000, 0.000) deg/s
+image 38 : dt = 16.128 ms, vitesse = (0.000, -7.816, 0.000) deg/s
+image 39 : dt = 17.049 ms, vitesse = (0.000, -22.180, 0.000) deg/s
+image 40 : dt = 15.962 ms, vitesse = (7.897, -15.794, 0.087) deg/s
+image 41 : dt = 17.139 ms, vitesse = (7.354, -14.709, 0.113) deg/s
+image 42 : dt = 15.907 ms, vitesse = (7.923, -23.773, 0.166) deg/s
+image 43 : dt = 17.344 ms, vitesse = (7.265, -21.804, 0.200) deg/s
+image 44 : dt = 16.609 ms, vitesse = (0.000, -22.768, 0.000) deg/s
+image 45 : dt = 16.329 ms, vitesse = (7.713, -30.878, 0.323) deg/s
+image 46 : dt = 18.020 ms, vitesse = (0.000, -13.990, 0.000) deg/s
+image 47 : dt = 17.892 ms, vitesse = (0.000, -28.181, -0.000) deg/s
+image 48 : dt = 16.188 ms, vitesse = (0.000, -23.359, 0.000) deg/s
+image 49 : dt = 16.262 ms, vitesse = (-0.000, -31.005, 0.000) deg/s
+image 50 : dt = 15.274 ms, vitesse = (0.000, -16.505, -0.000) deg/s

@@ -1,0 +1,5 @@
+La série programmée : La vitesse angulaire mesurée reste constante à 30°/s sur l'axe Y pour les 20 mesures. Par exemple, pour des intervalles de 15,367 ms et de 17,585 ms, la vitesse reste de 30°/s. La rotation programmée est donc stable malgré les variations du temps entre deux images.
+
+La série à la souris : La vitesse angulaire varie selon les images. Sur l'axe Y, elle passe de 0°/s à -31,005°/s. On observe également des composantes sur l'axe X pouvant atteindre environ 7,923°/s. Ces variations montrent que le mouvement manuel n'est pas parfaitement régulier.
+
+D'où vient le bruit : Le bruit provient principalement des variations du mouvement manuel de la souris et de la discrétisation des déplacements détectés entre deux images. Les variations de l'intervalle de temps entre les images peuvent également influencer la vitesse calculée, puisque celle-ci est obtenue en divisant la variation d'orientation par le temps écoulé. La rotation programmée présente moins de bruit, car son angle est calculé à partir du temps écoulé et d'une vitesse constante.
