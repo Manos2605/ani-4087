@@ -7,8 +7,13 @@ int main(){
 
     int nombreImages = 1;
     int nombreOrdres = 0;
-    
+
     if (!(std::cin >> nombreImages >> nombreOrdres)){
+        return 0;
+    }
+
+    if (nombreImages <= 0){
+        // Sans aucune image, le modulo de l'index serait une division par zéro.
         return 0;
     }
 
@@ -17,7 +22,7 @@ int main(){
     int imageEmpruntee = 0; // laquelle
     bool dessinee = false; // l'image empruntée a-t-elle reçu un draw ?
 
-    bool rendueDepuisSoumission = false // une image a-t-elle été rendue depuis le dernier envoi ?
+    bool rendueDepuisSoumission = false; // une image a-t-elle été rendue depuis le dernier envoi ?
     int derniereRendue = 0; // j de la dernière image relâchée
     bool derniereDessinee = false; // cette image avait-elle été dessinée ?
 

@@ -87,7 +87,7 @@ int main(){
             } else{
                 std::cout << "IMAGE " << imagesNumerotees << " CIBLE " << destination << '\n';
                 const Cible &cible = cibles[static_cast<std::size_t>(destination - 1)];
-                
+
                 if (zoneLargeur > cible.largeur || zoneHauteur > cible.hauteur){
                     // Le travail ne se termine jamais : le tampon reste pris.
                     tamponPris[static_cast<std::size_t>(tampon)] = true;
