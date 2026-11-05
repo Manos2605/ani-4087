@@ -1,100 +1,99 @@
-#include <cstdint>
 #include <iostream>
-#include <limits>
 #include <string>
 #include <vector>
 
 int main() {
-    std::ios::sync_with_stdio(false);
-    std::cin.tie(nullptr);
+    int n, T;
+    long long x0, v;
 
-    // Lecture des paramètres
-    std::uint64_t n = 0;
-    std::uint64_t t = 0;
-    long long x0 = 0;
-    long long v = 0;
+    std::cin >> n >> T >> x0 >> v;
 
-    if (!(std::cin >> n >> t >> x0 >> v)) {
-        return 0;
-    }
+    std::string modes;
+    std::cin >> modes;
 
-    // Vérification des valeurs reçues
-    if (n == 0 || n > 4 || t == 0) {
-        std::cout << "SAUTS AUCUN\n";
-        return 0;
-    }
+    std::vector<int> images(n, 0);
 
-    std::string mot;
-    if (!(std::cin >> mot) || mot.size() != t) {
-        std::cout << "SAUTS AUCUN\n";
-        return 0;
-    }
+    int prochaine = 0;
+    long long derniere_position = 0;
+    bool premiere = true;
 
-    // Stockage des trames dans les différents emplacements
-    std::vector<std::uint64_t> emplacement(static_cast<std::size_t>(n), 0);
-    std::uint64_t prochaine = 0;
+    long long min_saut = 0;
+    long long max_saut = 0;
+    bool premier_saut = true;
 
-    std::int64_t dernier_affichee = std::numeric_limits<std::int64_t>::min();
-    std::int64_t min_saut = std::numeric_limits<std::int64_t>::max();
-    std::int64_t max_saut = std::numeric_limits<std::int64_t>::min();
-    bool aucun_saut = true;
+    for (int t = 1; t <= T; t++) {
 
-    for (std::uint64_t k = 0; k < t; ++k) {
-        std::uint64_t trame = k + 1;
-        char mode = mot[k];
+        // On peint la prochaine image
+        int empruntee = prochaine;
+        images[empruntee] = t;
 
-        // Écriture de la nouvelle trame dans l'emplacement disponible
-        std::uint64_t index_emprunte = prochaine;
-        emplacement[static_cast<std::size_t>(index_emprunte)] = trame;
+        int index;
 
-        std::uint64_t index_soumis = 0;
-        if (mode == 'P') {
-            index_soumis = (prochaine + n - 1u) % n;
+        if (modes[t - 1] == 'P') {
+            index = (prochaine + n - 1) % n;
         }
 
-        // Récupération de la trame qui sera affichée
-        std::uint64_t f = emplacement[static_cast<std::size_t>(index_soumis)];
-        long long position_affichee = (f == 0) ? 0 : (x0 + static_cast<long long>(v) * static_cast<long long>(f));
+        // On libère l'image et on passe à la suivante
+        prochaine = (prochaine + 1) % n;
 
-        if (mode == 'D') {
-            index_soumis = (prochaine + n - 1u) % n;
-        } else if (mode == 'A') {
-            index_soumis = index_emprunte;
+        if (modes[t - 1] == 'D') {
+            index = (prochaine + n - 1) % n;
+        }
+        else if (modes[t - 1] == 'A') {
+            index = empruntee;
         }
 
-        // Affichage et calcul des sauts entre les positions
+        int f = images[index];
+
         if (f == 0) {
-            std::cout << trame << " NOIR -\n";
-            dernier_affichee = std::numeric_limits<std::int64_t>::min();
-            aucun_saut = false;
-        } else {
-            if (trame == 1) {
-                std::cout << trame << ' ' << position_affichee << " - -\n";
-                dernier_affichee = static_cast<std::int64_t>(position_affichee);
-                aucun_saut = false;
-            } else {
-                std::int64_t saut = static_cast<std::int64_t>(position_affichee) - dernier_affichee;
-                std::cout << trame << ' ' << position_affichee << " " << saut << " -\n";
-                dernier_affichee = static_cast<std::int64_t>(position_affichee);
-
-                if (saut < min_saut) min_saut = saut;
-                if (saut > max_saut) max_saut = saut;
-
-                aucun_saut = false;
-            }
+            std::cout << t << " NOIR -\n";
+            premiere = true;
         }
+        else {
+            long long position = x0 + v * f;
 
-        // Passage à l'emplacement suivant
-        prochaine = (prochaine + 1u) % n;
+            if (premiere) {
+                std::cout << t << " " << position << " -\n";
+                premiere = false;
+            }
+            else {
+                long long saut = position - derniere_position;
+
+                std::cout << t << " " << position << " " << saut << '\n';
+
+                if (premier_saut) {
+                    min_saut = saut;
+                    max_saut = saut;
+                    premier_saut = false;
+                }
+                else {
+                    if (saut < min_saut) {
+                        min_saut = saut;
+                    }
+
+                    if (saut > max_saut) {
+                        max_saut = saut;
+                    }
+                }
+            }
+
+            derniere_position = position;
+        }
     }
 
-    // bilan final
-    if (aucun_saut) {
+    if (premier_saut) {
         std::cout << "SAUTS AUCUN\n";
-    } else {
+    }
+    else {
         std::cout << "SAUT MIN " << min_saut << '\n';
         std::cout << "SAUT MAX " << max_saut << '\n';
-        std::cout << ((min_saut != max_saut) ? "TREMBLE OUI" : "TREMBLE NON") << '\n';
+
+        if (min_saut != max_saut) {
+            std::cout << "TREMBLE OUI\n";
+        }
+        else {
+            std::cout << "TREMBLE NON\n";
+        }
     }
 
     return 0;
