@@ -1,16 +1,19 @@
-Images paires et impaires : Avec la chaîne de deux images et les modes DPDPDPDP, le programme montre la trame 1 à la position 10, la trame 3 à 30, la 5 à 50, la 7 à 70. Les trames paires 2, 4, 6 et 8 restent à 10, 30, 50 et 70. L’alternance montre donc une image « en avance » aux trames impaires et une image en retard d’une trame aux trames paires. Chaque paire de trames voisines forme un petit aller-retour, et le bilan donne un saut minimum de 0 et un saut maximum de 20.
+Images paires et impaires : Avec deux images et les modes DPDPDPDP, on remarque que les trames impaires affichent la trame actuelle : 1, 3, 5 et 7. Par contre, les trames paires affichent encore la trame précédente. Par exemple, la trame 2 affiche toujours la position 10 au lieu de 20. Les sauts alternent donc entre 0 et 20 mm. Le mouvement tremble avec un saut minimum de 0 et un maximum de 20.
 
-Avec une seule image : Si on relance avec n égal à 1, le bug disparaît. Toutes les trames montrent leur propre position, les sauts sont tous identiques, et le programme ne tremble plus. Avec la même entrée changée en n = 1, la sortie exacte est :
-1 10 - -
-2 20 10 -
-3 30 10 -
-4 40 10 -
-5 50 10 -
-6 60 10 -
-7 70 10 -
-8 80 10 -
+Avec une seule image : Avec une seule image, le problème disparaît puisque tous les modes utilisent le même emplacement. Chaque trame affiche donc sa propre position. Voici le résultat obtenu :
+
+1 10 -
+2 20 10
+3 30 10
+4 40 10
+5 50 10
+6 60 10
+7 70 10
+8 80 10
 SAUT MIN 10
 SAUT MAX 10
 TREMBLE NON
 
-La bonne lecture : La lecture correcte de l’index soumis se fait après ReleaseImage, avec la formule (prochaine + n - 1) % n sur la prochaine valeur déjà avancée. C’est ce moment qui désigne bien l’image qu’on vient de peindre, et non l’image de la trame précédente. Le mode qui correspond à cette bonne lecture est le mode D, lu après la libération.
+On constate que les sauts sont toujours de 10 mm. Le mouvement est donc régulier et ne tremble plus.
+
+La bonne lecture : La bonne lecture consiste à récupérer l'index après ReleaseImage. Cela permet de récupérer l'image qui vient d'être peinte au lieu de récupérer celle de la trame précédente. C'est donc le mode D qui correspond à la bonne lecture.
