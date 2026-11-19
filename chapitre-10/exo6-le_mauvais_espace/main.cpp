@@ -36,53 +36,62 @@ int main() {
         char D, C;
         long long x, y, z;
         int k;
+
         cin >> D >> C >> x >> y >> z >> k;
 
-        long long localDrX = x;
-        long long localDrZ = z;
-        tourner(localDrX, localDrZ, ak);
+        long long vraieX, vraieY, vraieZ;
+        int vraiK;
 
-        long long ancreDrX = ax;
-        long long ancreDrZ = az;
-        tourner(ancreDrX, ancreDrZ, ak);
-
-        long long vraieX, vraieZ;
         if (D == 'L') {
-            vraieX = ancreDrX + localDrX;
-            vraieZ = ancreDrZ + localDrZ;
+            long long rx = x;
+            long long rz = z;
+
+            tourner(rx, rz, ak);
+
+            vraieX = ax + rx;
+            vraieY = ay + y;
+            vraieZ = az + rz;
+            vraiK = (ak + k) % 4;
         } else {
             vraieX = x;
+            vraieY = y;
             vraieZ = z;
+            vraiK = k;
         }
-        long long vraieY = (D == 'L') ? (ay + y) : y;
-        int vraiK = (D == 'L') ? ((ak + k) % 4) : k;
 
-        long long localCrueX = x;
-        long long localCrueZ = z;
-        tourner(localCrueX, localCrueZ, ak);
+        long long cruX, cruY, cruZ;
+        int cruK;
 
-        long long ancreCrueX = ax;
-        long long ancreCrueZ = az;
-        tourner(ancreCrueX, ancreCrueZ, ak);
-
-        long long cruX, cruZ;
         if (C == 'L') {
-            cruX = ancreCrueX + localCrueX;
-            cruZ = ancreCrueZ + localCrueZ;
+            long long rx = x;
+            long long rz = z;
+
+            tourner(rx, rz, ak);
+
+            cruX = ax + rx;
+            cruY = ay + y;
+            cruZ = az + rz;
+            cruK = (ak + k) % 4;
         } else {
             cruX = x;
+            cruY = y;
             cruZ = z;
+            cruK = k;
         }
-        long long cruY = (C == 'L') ? (ay + y) : y;
-        int cruK = (C == 'L') ? ((ak + k) % 4) : k;
 
         long long dx = cruX - vraieX;
         long long dy = cruY - vraieY;
         long long dz = cruZ - vraieZ;
-        int dk = ((cruK - vraiK) + 4) % 4;
 
-        cout << i << " CRU " << cruX << " " << cruY << " " << cruZ << " " << cruK << endl;
-        cout << i << " ECART " << dx << " " << dy << " " << dz << " " << dk << endl;
+        int dk = (cruK - vraiK + 4) % 4;
+
+        cout << i << " CRU "
+             << cruX << " " << cruY << " "
+             << cruZ << " " << cruK << endl;
+
+        cout << i << " ECART "
+             << dx << " " << dy << " "
+             << dz << " " << dk << endl;
 
         if (dx == 0 && dy == 0 && dz == 0 && dk == 0) {
             justes++;

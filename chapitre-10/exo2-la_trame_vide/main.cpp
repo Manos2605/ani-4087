@@ -13,6 +13,7 @@ int main() {
     }
 
     string signes = "";
+
     if (T > 0) {
         cin >> signes;
     }
@@ -23,13 +24,13 @@ int main() {
     int sautees = 0;
 
     for (int t = 1; t <= T; t++) {
-        int rendre = 1;
-        if (T > 0) {
-            rendre = signes[t - 1] - '0';
-        }
+        int rendre = signes[t - 1] - '0';
 
         if (rendre == 1) {
-            cout << t << " OUI 1 " << image << " " << image << endl;
+            int lacet = t - 1;
+
+            cout << t << " OUI 1 " << lacet << " " << image << endl;
+
             image = (image + 1) % N;
             rendues++;
         } else {

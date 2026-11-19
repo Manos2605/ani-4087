@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -8,6 +9,7 @@ int main() {
 
     int idxG = 0;
     int idxD = 0;
+
     bool emprunteG = false;
     bool emprunteD = false;
     bool ouverte = false;
@@ -84,15 +86,19 @@ int main() {
             }
         }
         else if (cmd == "end") {
-            bool g = false, d = false;
-            string extra = "";
-            if (!(cin >> extra)) {
-                break;
-            }
+            string extra;
+            cin >> extra;
 
-            if (extra != "-") {
-                if (extra[0] == '1') g = true;
-                if (extra.size() > 2 && extra[2] == '1') d = true;
+            bool projection = (extra != "-");
+            bool g = false;
+            bool d = false;
+
+            if (projection) {
+                g = (extra == "1");
+
+                int valeurD;
+                cin >> valeurD;
+                d = (valeurD == 1);
             }
 
             if (!ouverte) {
@@ -102,26 +108,32 @@ int main() {
             else {
                 bool bloque = false;
 
-                if (g && emprunteG) {
+                if (projection && g && emprunteG) {
                     cout << appel << " end REFUSE ACQUISE G" << endl;
                     bloque = true;
+                    journal++;
                 }
-                else if (d && emprunteD) {
+                else if (projection && d && emprunteD) {
                     cout << appel << " end REFUSE ACQUISE D" << endl;
                     bloque = true;
-                }
-
-                if (!g) {
-                    avertissements++;
-                }
-                if (!d) {
-                    avertissements++;
+                    journal++;
                 }
 
                 if (!bloque) {
                     string sortie = to_string(appel) + " end OK";
-                    if (!g) sortie += " AVERT G";
-                    if (!d) sortie += " AVERT D";
+
+                    if (projection) {
+                        if (!g) {
+                            sortie += " AVERT G";
+                            avertissements++;
+                        }
+
+                        if (!d) {
+                            sortie += " AVERT D";
+                            avertissements++;
+                        }
+                    }
+
                     cout << sortie << endl;
                 }
 

@@ -16,6 +16,7 @@ int main() {
         cin >> n;
 
         vector<string> appels;
+
         for (int i = 0; i < n; i++) {
             string a;
             cin >> a;
@@ -24,6 +25,7 @@ int main() {
 
         bool attendu = false;
         bool commence = false;
+        bool terminee = false;
         bool vues = false;
         bool emprunteG = false;
         bool emprunteD = false;
@@ -35,6 +37,12 @@ int main() {
             string a = appels[i];
 
             if (!fauteCode.empty()) {
+                continue;
+            }
+
+            if (terminee) {
+                fautePlace = i + 1;
+                fauteCode = "APRES_END";
                 continue;
             }
 
@@ -124,12 +132,13 @@ int main() {
                 } else {
                     commence = false;
                     vues = false;
+                    terminee = true;
                 }
             }
         }
 
-        if (fauteCode.empty()) {
-            if (commence) {
+        if (fauteCode.empty() && !terminee) {
+            if (commence || !terminee) {
                 fautePlace = n + 1;
                 fauteCode = "SANS_END";
             }
