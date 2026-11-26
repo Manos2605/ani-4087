@@ -1,0 +1,5 @@
+Le réglage fantôme : Celui qui modifie depthZeroToOne pense activer ou désactiver un réglage graphique réel du moteur, mais en réalité le programme ne le lit nulle part. Le changement n'a donc aucun effet sur le rendu et trompe l'utilisateur qui croit que l'option fonctionne.
+
+La lecture cachée : Si un menu modifie le champ openXrLoaderPath en mémoire alors que le backend va lire directement la variable d'environnement NK_XR_OPENXR_LOADER avec getenv, la valeur choisie dans le menu est complètement ignorée. Le backend court-circuite le descripteur de session et utilise toujours le chemin imposé par l'environnement.
+
+Le menu : Une personne avec un casque sur la tête peut changer 5 réglages sur 9 (renderScale, halfRate, submitDepthLayer, listExtensions et displayHz). Pour les autres, il faudrait supprimer les appels directs à getenv afin de passer uniquement par les champs de configuration et la fonction dédiée aux variables d'environnement, brancher la lecture effective de depthZeroToOne dans le code de rendu, et exposer syncCopyDiagnostic en écriture pour qu'il soit modifiable depuis l'application.

@@ -1,0 +1,16 @@
+DEUX 19
+SEUL_A GetVulkanRequirements
+SEUL_A GetVulkanPhysicalDevice
+SEUL_A BindVulkan
+SEUL_A CreateHmdSwapchains
+SEUL_A SubmitEyes
+SEUL_A ApplyHaptic
+SEUL_A LocateHand
+SEUL_A GetPerfMetrics
+SEUL_A GetDisplayRefreshRates
+SEUL_A GetDisplayRefreshRate
+SEUL_A RequestDisplayRefreshRate
+SEUL_A GetVisibilityMask
+SEUL_B DebugSetHead
+SEUL_B DebugPushSample
+DIFFERENTES 14 SUR 33

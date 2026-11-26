@@ -1,0 +1,5 @@
+Ce qui varie : Si l'instant de chaque image venait de l'horloge système, les horodatages produits changeraient à chaque exécution parce que le programme ne démarre jamais à la même heure et que le temps écoulé entre deux images varie légèrement selon la charge de la machine. Même en soustrayant l'instant de départ, les écarts ne seraient jamais strictement identiques d'un lancement à l'autre.
+
+Le remède : À la place, le test impose une trajectoire déterministe pour la tête (position et lacet calculés image par image) et remplace l'horloge système par une horloge scriptée où l'instant vaut simplement le numéro de l'image multiplié par la période fixe. Le programme produit ainsi exactement les mêmes nombres à chaque exécution.
+
+La preuve : En exécutant exactement la même application avec cette même séquence de poses et d'instants scriptés sur le simulateur puis sur le vrai backend OpenXR, on obtient deux fichiers de sortie comparables ligne par ligne. Si les positions calculées pour les deux yeux et les instants prédits sont identiques à l'octet près, cela prouve que l'abstraction fonctionne et que les deux backends réalisent exactement le même calcul.

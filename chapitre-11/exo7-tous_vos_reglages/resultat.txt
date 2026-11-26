@@ -1,0 +1,10 @@
+renderScale MENU
+halfRate MENU
+submitDepthLayer MENU
+listExtensions MENU
+openXrLoaderPath CACHE
+depthZeroToOne FANTOME
+syncCopyDiagnostic CONSTANTE
+displayHz MENU
+shotFrame CACHE
+MENU 5 SUR 9
